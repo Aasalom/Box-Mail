@@ -31,7 +31,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="contariner alert alert-info">
-          <h2>Box MAIL</h2>
+          <h2>Box Mail</h2>
           </div>
         
           
@@ -40,7 +40,7 @@
               <!-- Custom Tabs -->
               <div class="card">
                 <div class="card-header d-flex p-0">
-                  <h3 class="card-title p-3"><a href="/"><button class='btn btn-danger'>Cerrar Sesión</button></a></h3>
+                  <h3 class="card-title p-3"><a href="/"><button  class='btn btn-danger'>Cerrar Sesion</button></a></h3>
                   <ul class="nav nav-pills ml-auto p-2">
                     <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Gestion de Envio</a></li>
                     <li class="nav-item" onclick="verHistorial()"><a class="nav-link" href="#tab_2" data-toggle="tab">Historial</a></li>
@@ -53,45 +53,44 @@
                     <div class="tab-pane active" id="tab_1">
                       
                       <form onsubmit="return enviarMAIL()">
-                        <input required id="txtAsunto"  name="txtAsunto" class="form-control" type="text" placeholder="Asunto:" max="50" />
+                        <input required id="txtAsunto" name="txtAsunto" class="form-control" type="text" placeholder="Asunto:" max="50" />
                         <hr>
-                        <select required class="form-control" id="sl_destino" name="sl_destino">
-                          <option value=''>Selecciones destinatario..</option>
-                          {% for m in datas%}
+                        <select required class='form-control' id='sl_destino' name='sl_destino'>
+                          <option value=''>Seleccione destinatario..</option>
+                          {% for m in datas %}
                           <option value="{{ m['correo'] }}">{{ m['nombreusuario'] }}</option>
-                          {%endfor%}
+                          {% endfor %}
                         </select>
                         <hr>
-                        <textarea placeholder="Mensaje:" required id="txtmensaje" name="txtmensaje" class="form-control"></textarea>
+                        <textarea placeholder="Mensaje:" required id="txtMensaje" name="txtMensaje" class="form-control"></textarea>
                         <br>
                         <center><button class="btn btn-success" type="submit">Enviar</button></center>
                       </form>
-
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_2">
-                      
+
                       <div class="row">
-                        <div class="col-6" id="d_enviados" name="d_enviados">
-                          Aquí podra ver los correos enviados
-                        </div>
-                        <div class="col-6" id="d_recibidos" name="d_recibidos">
-                          Aquí podra ver los correos recibidos
+                         <div class="col-6" id='d_enviados' name='d_enviados'>
+                          aqui se podra visualizar los correos enviados
+                         </div>
+                         <div class="col-6" id='d_recibidos' name='d_recibidos'>
+                            aqui se podra visualizar los correos RECIBIDOS
+                          </div>
                       </div>
-                    </div>
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_3">
-                      
-                      <center class="alert alert-info"><h3>Cambio de Contraseña</h3></center>
+                     
+                      <center class='alert alert-info'><h3>Cambio de Contraseña</h3></center>
                       <hr>
                       <form onsubmit="return cambioPassword()">
-                        Nueva Contraseña
-                        <input required type="password" class="form-control" id="txtpass1" name="txtpass1">
-                        Confirmar Contraseña
-                        <input required type="password" class="form-control" id="txtpass2" name="txtpass2">
-                        <hr>
-                        <button type="submit" class="btn btn-info">Actualizar</button>
+                          Nueva Contraseña
+                          <input required type="password" class="form-control" id='txtpass1' name='txtpass1'>
+                          Confirmar Contraseña
+                          <input required type="password" class="form-control" id='txtpass2' name='txtpass2'>
+                          <hr>
+                          <button type='submit' class='btn btn-info'>Actualizar</button>
                       </form>
 
                     </div>
@@ -141,83 +140,97 @@
 <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
 
 <script>
-function cambioPassword(){
+  function cambioPassword(){
 
-  if($("#txtpass1").val()==$("#txtpass2").val() )
-  {
+    if($("#txtpass1").val()==$("#txtpass2").val())
+    {
 
-    $.ajax({
-    url : 'actualizacionPassword',
-    data : "pass="+$("#txtpass1").val(),
-    type : 'POST',
-    success : function(r){
-              alert(r);
-    },
-    error : function(xhr, status){
-      alert("Error intente en otro momento");
+      $.ajax({
+        url : 'actualizacionPassword',
+        data : "pass="+$("#txtpass1").val(),
+        type : 'POST',
+        success : function(r) {
+                 alert(r);
+        },
+        error : function(xhr, status) {
+            alert('Error intente en otro momento');
+        }
+     });
+    
+
     }
-  });
+    else{
 
+      alert("ERROR!!! Las contraseñs no coinciden.");
+    }
+
+
+    return false;
   }
-  else{
-    alert("Error, las contraseñas no coinciden")
-  }
 
 
-  return false;
-}
 
-
-//////////////////////////////////////////////
-//////////////////////////////////////////////
-function verHistorial(){
+  ///////////////////
+ function verHistorial(){
 
   $.ajax({
     url : 'HistorialEnviados',
     data : "",
     type : 'POST',
-    success : function(r){
-              r="<center class='alert alert-info'><strong>Elementos Enviados</strong></center>"+r;
-              $("#d_enviados").html(r)
+    success : function(r) {
+              r="<center class='alert alert-info'><strong>Correos Enviados</strong></center>"+r;
+             $("#d_enviados").html(r)
     },
-    error : function(xhr, status){
-      alert("Error intente en otro momento");
+    error : function(xhr, status) {
+        alert('Error intente en otro momento');
     }
-  });
+ });
 
-  $.ajax({
-    url : 'HistorialRecibidos',
-    data : "",
-    type : 'POST',
-    success : function(r){
-              r="<center class='alert alert-info'><strong>Elementos Recibidos</strong></center>"+r;
-              $("#d_recibidos").html(r)
-    },
-    error : function(xhr, status){
-      alert("Error intente en otro momento");
-    }
-  });
-}
-//////////////////////////////////////////////
-//////////////////////////////////////////////
+////////////////////
+$.ajax({
+  url : 'HistorialRecibidos',
+  data : "",
+  type : 'POST',
+  success : function(r) {
+            r="<center class='alert alert-info'><strong>Correos Recibidos</strong></center>"+r;
+           $("#d_recibidos").html(r)
+  },
+  error : function(xhr, status) {
+      alert('Error intente en otro momento');
+  }
+});
+
+
+
+
+
+
+
+ }
+
+
+  ////////////////////
 function enviarMAIL(){
 
   $.ajax({
     url : 'enviarMAIL',
     data : "asunto="+$("#txtAsunto").val()+"&emailDestino="+$("#sl_destino").val()+"&mensaje="+$("#txtMensaje").val(),
-    type : "POST",
-    success : function(r){
-      alert(r);
+    type : 'POST',
+    success : function(r) {
+           alert(r);    
     },
-    error : function(xhr, status){
-      alert("Error intente en otro momento");
+    error : function(xhr, status) {
+        alert('Error intente en otro momento');
     }
-  });
-  
-return false;
+ });
+
+ return false;
+
 }
-//////////////////////////////////////////////
-//////////////////////////////////////////////
+
+
+
+/////////////////////////
 function gestionmenus(){
   $("#titulo").html("Gestion de Menus");
 
@@ -226,6 +239,8 @@ function gestionmenus(){
   +"<br><button class='btn btn-info'>Procesar</button>";
 
   $("#contenido").html(info);
+
+
 }
 
 </script>
