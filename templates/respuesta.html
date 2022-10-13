@@ -1,5 +1,5 @@
 
-<table class='table table-striped table-hover table-bordered'>
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>Fecha</th>
         <th>Hora</th>
@@ -8,17 +8,17 @@
         <th>Mensaje</th>
     </tr>
 
-    {% for m in datas %}
+    {% for m in datas%}
     <tr>
-        <td>{{ m['fecha'] }}</td>
-        <td>{{ m['hora'] }}</td>
-        <td>{{ m['nombreusuario'] }}</td>
-        <td>{{ m['asunto'] }}</td>
-        <td>{{ m['mensaje'] }}</td>
+        <td>{{m['fecha'] }}</td>
+        <td>{{m['hora'] }}</td>
+        <td>{{m['nombreusuario'] }}</td>
+        <td>{{m['asunto'] }}</td>
+        <td>{{m['mensaje'] }}</td>
     </tr>
     
-    {% endfor %}
+    {%endfor%}
 
-    
+
 
 </table>
