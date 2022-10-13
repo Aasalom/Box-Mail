@@ -61,7 +61,7 @@ def registrarUsuario():
 
         print(codigo2)
 
-        mensaje="Sr "+nombre+", usuario su codigo de activacion es :\n\n"+codigo2+ "\n\n Recuerde copiarlo y pegarlo para validarlo en la seccion de login y activar su cuenta.\n\nMuchas Gracias"
+        mensaje="Hola "+nombre+", tu código de activación es :\n\n"+codigo2+ "\n\n Copialo y pegalo para activar tu cuenta.\n\n Gracias"
 
         envioemail.enviar(email,mensaje,"Codigo de Activacion")
         
@@ -81,7 +81,7 @@ def enviarMAIL():
         mensaje=mensaje.replace("SELECT","").replace("INSERT","").replace("DELETE","").replace("UPDATE","").replace("WHERE","")
         controlador.registrar_mail(email_origen,emailDestino,asunto,mensaje)
 
-        mensaje2= "Sr usuario ud recibio un mensaje nuevo, por favor ingrese a la plataforma para observar su email, en la pestaña Historial. \n\n Muchas gracias."
+        mensaje2= "Tienes un mensaje nuevo, por favor ingrese a la plataforma para revisarlo en la pestaña Historial. \n\n Gracias."
         envioemail.enviar(emailDestino,mensaje2,"Nuevo Mensaje Enviado")
         return "Email Enviado Satisfactoriamente"
 #--------------------------------------------------
@@ -95,7 +95,7 @@ def HistorialEnviados():
 @app.route("/HistorialRecibidos", methods=['GET','POST'])
 def HistorialRecibidos():
     resultado=controlador.ver_recibidos(email_origen)
-    return render_template("respuesta.html",datas=resultado)
+    return render_template("respuesta2.html",datas=resultado)
 #--------------------------------------------------
 #--------------------------------------------------       
 @app.route("/activarUsuario", methods=['GET','POST'])
@@ -106,9 +106,9 @@ def activarUsuario():
         respuesta=controlador.activar_usuario(codigo)
         
         if len(respuesta)==0:
-            mensaje= "El código de activación es erroneo, verifíquelo."
+            mensaje= "El código de activación es erroneo, verifíquelo e intente nuevamente."
         else: 
-            mensaje= "El usuario se ha activado exitosamente."
+            mensaje= "Su usuario ha sido activado exitosamente."
        
         return render_template("informacion.html",datas=mensaje) 
 #--------------------------------------------------
@@ -122,6 +122,6 @@ def actualizacionPassword():
         passw2=hashlib.sha384(passw2).hexdigest() #encriptador
 
         controlador.actualizaPass(passw2,email_origen,)
-        return "Actualizacion de Password Satisfactoria"
+        return "Actualizacion Exitosa"
         
        

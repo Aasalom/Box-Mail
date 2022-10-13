@@ -70,7 +70,7 @@ def registrar_usuario(nombre, correo, password, codigo): #
         db.commit() #para confirmar inserccion
         return "Usuario registrado Satisfactoriamente"
     except:
-        return "Error!!! Correo ya existente, verifique sus datos de nuevo."
+        return "Error!!! Correo ya existente, verifique sus datos e intente nuevamente."
 
     
 #--------------------------------------------------
